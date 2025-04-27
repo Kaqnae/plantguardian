@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantguardian/features/shared/models/plant_model.dart';
+import 'package:plantguardian/features/shared/widgets/plant_form.dart';
 
 class PlantDetailPage extends StatelessWidget {
   final Plant plant;
@@ -18,25 +19,13 @@ class PlantDetailPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: nameController,
-              decoration: const InputDecoration(labelText: 'Name'),
-            ),
-            TextField(
-              controller: typeController,
-              decoration: const InputDecoration(labelText: 'Type'),
-            ),
-            TextField(
-              controller: descController,
-              decoration: const InputDecoration(labelText: 'Description'),
+            PlantForm(
+              nameController: nameController,
+              typeController: typeController,
+              descController: descController,
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // Save plant logic (update backend or local list later)
-              },
-              child: const Text('Save'),
-            ),
+            ElevatedButton(onPressed: () {}, child: const Text('Save')),
           ],
         ),
       ),

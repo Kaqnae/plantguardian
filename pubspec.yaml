@@ -1,14 +1,18 @@
 name: plantguardian
 description: "A new Flutter project."
-publish_to: 'none'
+publish_to: "none"
 version: 0.1.0
 
 environment:
   sdk: ^3.7.2
 
 dependencies:
+  camera: ^0.11.1
   flutter:
     sdk: flutter
+  image_picker: ^1.1.2
+  path: ^1.9.1
+  path_provider: ^2.1.5
 
 dev_dependencies:
   flutter_test:

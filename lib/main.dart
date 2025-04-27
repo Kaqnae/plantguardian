@@ -3,6 +3,8 @@ import 'features/auth/presentation/pages/login_page.dart';
 import 'features/plant_overview/presentation/pages/main_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+
   runApp(const PlantGuardianApp());
 }
 

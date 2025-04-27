@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantguardian/features/add_plant/presentation/pages/add_plant_page.dart';
 import 'package:plantguardian/features/plant_overview/presentation/widgets/plant_card.dart';
 import 'package:plantguardian/features/shared/models/plant_model.dart';
 import 'package:plantguardian/features/plant_detail/presentation/pages/plant_detail_page.dart';
@@ -29,7 +30,10 @@ class MainScreen extends StatelessWidget {
         actions: [
           PopupMenuButton<String>(
             onSelected: (value) {
-              // future: add plant logic
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddPlantPage()),
+              );
             },
             itemBuilder: (BuildContext context) {
               return {'Add Plant'}.map((String choice) {
