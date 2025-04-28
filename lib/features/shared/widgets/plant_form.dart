@@ -5,12 +5,14 @@ class PlantForm extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController typeController;
   final TextEditingController descController;
+  final TextEditingController lastWateredController;
 
   const PlantForm({
     super.key,
     required this.nameController,
     required this.typeController,
     required this.descController,
+    required this.lastWateredController,
   });
 
   @override
@@ -20,6 +22,10 @@ class PlantForm extends StatelessWidget {
         PlantTextfields(controller: nameController, label: 'Name'),
         PlantTextfields(controller: typeController, label: 'Type'),
         PlantTextfields(controller: descController, label: 'Description'),
+        PlantTextfields(
+          controller: lastWateredController,
+          label: 'Last Watered',
+        ),
       ],
     );
   }

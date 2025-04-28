@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:plantguardian/features/add_plant/presentation/pages/add_plant_page.dart';
+import 'package:plantguardian/features/plant_overview/presentation/widgets/plant_add_card.dart';
 import 'package:plantguardian/features/plant_overview/presentation/widgets/plant_card.dart';
 import 'package:plantguardian/features/shared/models/plant_model.dart';
 import 'package:plantguardian/features/plant_detail/presentation/pages/plant_detail_page.dart';
@@ -47,19 +48,30 @@ class MainScreen extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
-        itemCount: plants.length,
+        itemCount: plants.length + 1,
         itemBuilder: (context, index) {
-          final plant = plants[index];
-          return PlantCard(
-            plant: plant,
-            onTap:
-                () => Navigator.push(
+          if (index == 0) {
+            return PlantAddCard(
+              onTap: () {
+                Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => PlantDetailPage(plant: plant),
+                  MaterialPageRoute(builder: (context) => const AddPlantPage()),
+                );
+              },
+            );
+          } else {
+            final plant = plants[index - 1];
+            return PlantCard(
+              plant: plant,
+              onTap:
+                  () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PlantDetailPage(plant: plant),
+                    ),
                   ),
-                ),
-          );
+            );
+          }
         },
       ),
     );

@@ -12,6 +12,9 @@ class PlantDetailPage extends StatelessWidget {
     final nameController = TextEditingController(text: plant.name);
     final typeController = TextEditingController(text: plant.type);
     final descController = TextEditingController(text: plant.description);
+    final lastWateredController = TextEditingController(
+      text: plant.lastWatered,
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(plant.name)),
@@ -23,6 +26,7 @@ class PlantDetailPage extends StatelessWidget {
               nameController: nameController,
               typeController: typeController,
               descController: descController,
+              lastWateredController: lastWateredController,
             ),
             const SizedBox(height: 20),
             ElevatedButton(onPressed: () {}, child: const Text('Save')),

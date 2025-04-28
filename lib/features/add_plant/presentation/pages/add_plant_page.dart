@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:plantguardian/features/shared/models/plant_model.dart';
 import 'package:plantguardian/features/shared/widgets/plant_form.dart';
 
 class AddPlantPage extends StatelessWidget {
@@ -10,6 +9,7 @@ class AddPlantPage extends StatelessWidget {
     final nameController = TextEditingController();
     final typeController = TextEditingController();
     final descController = TextEditingController();
+    final lastWateredController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(title: Text('Add a plant')),
@@ -21,6 +21,7 @@ class AddPlantPage extends StatelessWidget {
               nameController: nameController,
               typeController: typeController,
               descController: descController,
+              lastWateredController: lastWateredController,
             ),
             const SizedBox(height: 20),
             ElevatedButton(
