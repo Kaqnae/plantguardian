@@ -7,6 +7,7 @@ class ProfilePage extends StatelessWidget {
 
   const ProfilePage({super.key, required this.profile});
 
+  @override
   Widget build(BuildContext context) {
     final nameController = TextEditingController(text: profile.name);
     final emailController = TextEditingController(text: profile.email);

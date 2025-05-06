@@ -59,8 +59,7 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
       final imageBytes = await File(image.path).readAsBytes();
 
       final fileName =
-          DateTime.now().millisecondsSinceEpoch.toString() +
-          '.jpg'; // You can customize this
+          DateTime.now().millisecondsSinceEpoch.toString() + '.jpg';
       final saveResult = await SaverGallery.saveImage(
         imageBytes,
         fileName: fileName,

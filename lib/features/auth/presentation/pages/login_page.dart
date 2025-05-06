@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantguardian/features/sign_up/presentation/pages/sign_up_page.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -35,7 +36,15 @@ class LoginPage extends StatelessWidget {
               child: const Text('Login'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: const Text('Sign up')),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpPage()),
+                );
+              },
+              child: const Text('Sign up'),
+            ),
           ],
         ),
       ),
