@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:plantguardian/features/auth/data/login_api_service.dart';
 import 'package:plantguardian/features/sign_up/presentation/pages/sign_up_page.dart';
 
 class LoginPage extends StatelessWidget {
@@ -29,9 +30,19 @@ class LoginPage extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: () {
-                // Fake login flow — just navigate to main
-                Navigator.pushReplacementNamed(context, '/main');
+              onPressed: () async {
+                final loginService = LoginApiService();
+                final success = await loginService.login(
+                  emailController.text.trim(),
+                  passwordController.text.trim(),
+                );
+                if (success) {
+                  Navigator.pushReplacementNamed(context, '/main');
+                } else {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(const SnackBar(content: Text('Login Failed')));
+                }
               },
               child: const Text('Login'),
             ),
