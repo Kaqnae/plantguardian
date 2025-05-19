@@ -10,7 +10,8 @@ class LoginApiService {
   LoginApiService({http.Client? client}) : client = client ?? http.Client();
 
   Future<bool> login(String username, String password) async {
-    final uri = Uri.parse('http://10.0.2.2:3000/api/login');
+    final uri = Uri.parse('http://10.176.69.182:3000/api/login');
+    //final uri = Uri.parse('http://192.168.0.24:3000/api/login');
 
     final response = await client.post(
       uri,

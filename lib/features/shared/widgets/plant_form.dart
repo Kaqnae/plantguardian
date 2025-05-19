@@ -5,14 +5,16 @@ class PlantForm extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController typeController;
   final TextEditingController descController;
-  final TextEditingController lastWateredController;
+  final TextEditingController potVolumeController;
+  final TextEditingController requiredWaterController;
 
   const PlantForm({
     super.key,
     required this.nameController,
     required this.typeController,
     required this.descController,
-    required this.lastWateredController,
+    required this.potVolumeController,
+    required this.requiredWaterController,
   });
 
   @override
@@ -23,8 +25,12 @@ class PlantForm extends StatelessWidget {
         PlantTextfields(controller: typeController, label: 'Type'),
         PlantTextfields(controller: descController, label: 'Description'),
         PlantTextfields(
-          controller: lastWateredController,
-          label: 'Last Watered',
+          controller: potVolumeController,
+          label: 'Pot Volume (ml)',
+        ),
+        PlantTextfields(
+          controller: requiredWaterController,
+          label: 'Required Water (ml)',
         ),
       ],
     );
