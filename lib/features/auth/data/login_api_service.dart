@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
+import 'package:plantguardian/features/shared/models/jwt_model.dart';
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -25,6 +26,22 @@ class LoginApiService {
       if (setCookie != null) {
         final cookie = setCookie.split(';').first;
         CookieSingleton().jwtCookie = cookie;
+
+        final token = cookie.split('=').last.replaceAll('"', '');
+        final tokenParts = token.split('.');
+        if (tokenParts.length == 3) {
+          final payload = tokenParts[1];
+          final normalized = base64Url.normalize(payload);
+          final decoded = utf8.decode(base64Url.decode(normalized));
+          final payloadMap = jsonDecode(decoded);
+
+          final parsedToken = JWTPayload.fromJson(payloadMap);
+          CookieSingleton().jwtPayload = parsedToken;
+
+          debugPrint('JWT parsed and stored: ${parsedToken.name}, role: ${parsedToken.role}');
+          } else {
+          debugPrint('Invalid JWT structure.');
+          }
         final singletonCookie = CookieSingleton().jwtCookie;
         debugPrint(
           'Login succesful. JWT set in cookie. JWTCookie: $singletonCookie',
