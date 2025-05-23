@@ -11,7 +11,7 @@ class LoginApiService {
   LoginApiService({http.Client? client}) : client = client ?? http.Client();
 
   Future<bool> login(String username, String password) async {
-    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}//login');
+    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}/login');
     //final uri = Uri.parse('http://192.168.0.24:3000/api/login');
 
     final response = await client.post(
