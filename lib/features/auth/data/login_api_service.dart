@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class LoginApiService {
   final http.Client client;
@@ -10,7 +11,7 @@ class LoginApiService {
   LoginApiService({http.Client? client}) : client = client ?? http.Client();
 
   Future<bool> login(String username, String password) async {
-    final uri = Uri.parse('http://10.176.69.182:3000/api/login');
+    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}//login');
     //final uri = Uri.parse('http://192.168.0.24:3000/api/login');
 
     final response = await client.post(

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'features/auth/presentation/pages/login_page.dart';
 import 'features/plant_overview/presentation/pages/main_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load();
   runApp(const PlantGuardianApp());
 }
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:plantguardian/features/shared/models/generic_plant_model.dart';
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class FetchGenericPlantsApi {
   final http.Client client;
@@ -10,7 +11,7 @@ class FetchGenericPlantsApi {
     : client = client ?? http.Client();
 
   Future<List<GenericPlantModel>> fetchPlants() async {
-    final uri = Uri.parse('http://10.176.69.182:3000/api/genericplants');
+    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}/genericplants');
     //final uri = Uri.parse('http://192.168.0.24:3000/api/genericplants');
 
     final jwtToken = CookieSingleton().jwtCookie;

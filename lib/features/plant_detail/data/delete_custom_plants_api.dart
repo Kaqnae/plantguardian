@@ -1,5 +1,6 @@
 import 'package:http/http.dart' as http;
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class DeleteCustomPlantsApi {
   final http.Client client;
@@ -8,7 +9,7 @@ class DeleteCustomPlantsApi {
     : client = client ?? http.Client();
 
   Future<void> deleteCustomPlant(String id) async {
-    final uri = Uri.parse('http://10.176.69.182:3000/api/customplants/$id');
+    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}/customplants/$id');
 
     final jwtToken = CookieSingleton().jwtCookie;
 
