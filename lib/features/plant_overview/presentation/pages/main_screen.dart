@@ -6,7 +6,6 @@ import 'package:plantguardian/features/plant_overview/presentation/widgets/plant
 import 'package:plantguardian/features/plant_overview/presentation/widgets/plant_card.dart';
 import 'package:plantguardian/features/shared/models/custom_plant_model.dart';
 import 'package:plantguardian/features/plant_detail/presentation/pages/plant_detail_page.dart';
-import 'package:plantguardian/features/shared/models/profile_model.dart';
 import 'package:plantguardian/features/profile/presentation/pages/profile_page.dart';
 
 class MainScreen extends StatefulWidget {
@@ -41,15 +40,6 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Profile> profile = [
-      Profile(
-        name: 'Noah',
-        email: 'noah@gmail.com',
-        userName: 'noahvi01',
-        password: '1234',
-      ),
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Plants'),
@@ -61,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProfilePage(profile: profile[0]),
+                    builder: (context) => ProfilePage(),
                   ),
                 );
               } else if (value == 'logout') {
