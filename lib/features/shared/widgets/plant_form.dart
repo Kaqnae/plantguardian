@@ -8,6 +8,9 @@ class PlantForm extends StatelessWidget {
   final TextEditingController potVolumeController;
   final TextEditingController requiredWaterController;
 
+  final TextEditingController? temperatureController;
+  final TextEditingController? moistureController;
+
   const PlantForm({
     super.key,
     required this.nameController,
@@ -15,6 +18,8 @@ class PlantForm extends StatelessWidget {
     required this.descController,
     required this.potVolumeController,
     required this.requiredWaterController,
+    this.temperatureController,
+    this.moistureController,
   });
 
   @override
@@ -32,6 +37,18 @@ class PlantForm extends StatelessWidget {
           controller: requiredWaterController,
           label: 'Required Water (ml)',
         ),
+        if (temperatureController != null)
+          PlantTextfields(
+            controller: temperatureController!,
+            label: 'Temperature (°C)',
+            readOnly: true,
+          ),
+        if (moistureController != null)
+          PlantTextfields(
+            controller: moistureController!,
+            label: 'Moisture (%)',
+            readOnly: true,
+          ),
       ],
     );
   }

@@ -33,6 +33,7 @@ class _MainScreenState extends State<MainScreen> {
 
     // Genhent planter efter man har tilføjet én
     if (result == true) {
+      await Future.delayed(const Duration(milliseconds: 500));
       setState(() {
         futureCustomPlants = FetchCustomPlantsApi().fetchPlants();
       });

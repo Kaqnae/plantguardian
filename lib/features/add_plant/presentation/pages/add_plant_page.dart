@@ -56,7 +56,7 @@ class _AddPlantPageState extends State<AddPlantPage> {
   void updateTextFields(GenericPlantModel plant) {
     nameController.text = plant.latinName;
     typeController.text = plant.category;
-    descController.text = plant.desc;
+    descController.text = plant.description;
   }
 
   Future<void> saveCustomPlant() async {
