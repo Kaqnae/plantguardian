@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:plantguardian/features/plant_detail/domain/metrics_model.dart';
+import 'package:plantguardian/features/shared/models/metrics_model.dart';
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 

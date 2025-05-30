@@ -4,6 +4,7 @@ import 'package:plantguardian/features/add_plant/data/fetch_generic_plants_api.d
 import 'package:plantguardian/features/add_plant/data/post_custom_plant_api.dart';
 import 'package:plantguardian/features/shared/models/custom_plant_model.dart';
 import 'package:plantguardian/features/shared/models/generic_plant_model.dart';
+import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
 import 'package:plantguardian/features/shared/widgets/plant_form.dart';
 import 'package:plantguardian/features/shared/pages/camera_preview_page.dart';
 import 'package:image_picker/image_picker.dart';
@@ -12,10 +13,10 @@ class AddPlantPage extends StatefulWidget {
   const AddPlantPage({super.key});
 
   @override
-  _AddPlantPageState createState() => _AddPlantPageState();
+  AddPlantPageState createState() => AddPlantPageState();
 }
 
-class _AddPlantPageState extends State<AddPlantPage> {
+class AddPlantPageState extends State<AddPlantPage> {
   final nameController = TextEditingController();
   final typeController = TextEditingController();
   final descController = TextEditingController();
@@ -63,8 +64,9 @@ class _AddPlantPageState extends State<AddPlantPage> {
     if (selectedPlant == null) {
       return;
     }
-
+    final userId = CookieSingleton().jwtPayload?.id;
     final customPlant = CustomPlantModel(
+      userId: userId,
       id: '',
       name: nameController.text,
       imageUrl: _image?.path ?? '',
@@ -89,69 +91,71 @@ class _AddPlantPageState extends State<AddPlantPage> {
       appBar: AppBar(title: const Text('Add a plant')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            if (_image != null)
-              Image.file(
-                File(_image!.path),
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              if (_image != null)
+                Image.file(
+                  File(_image!.path),
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.cover,
+                ),
+              const SizedBox(height: 10),
+              FutureBuilder<List<GenericPlantModel>>(
+                future: futurePlants,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                    return const Text('No plants available');
+                  } else {
+                    List<GenericPlantModel> plants = snapshot.data!;
+                    return Column(
+                      children: [
+                        DropdownButton<GenericPlantModel>(
+                          value: selectedPlant,
+                          onChanged: (GenericPlantModel? newPlant) {
+                            setState(() {
+                              selectedPlant = newPlant;
+                              updateTextFields(newPlant!);
+                            });
+                          },
+                          items:
+                              plants.map((GenericPlantModel plant) {
+                                return DropdownMenuItem<GenericPlantModel>(
+                                  value: plant,
+                                  child: Text(plant.latinName),
+                                );
+                              }).toList(),
+                        ),
+                      ],
+                    );
+                  }
+                },
               ),
-            const SizedBox(height: 10),
-            FutureBuilder<List<GenericPlantModel>>(
-              future: futurePlants,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No plants available');
-                } else {
-                  List<GenericPlantModel> plants = snapshot.data!;
-                  return Column(
-                    children: [
-                      DropdownButton<GenericPlantModel>(
-                        value: selectedPlant,
-                        onChanged: (GenericPlantModel? newPlant) {
-                          setState(() {
-                            selectedPlant = newPlant;
-                            updateTextFields(newPlant!);
-                          });
-                        },
-                        items:
-                            plants.map((GenericPlantModel plant) {
-                              return DropdownMenuItem<GenericPlantModel>(
-                                value: plant,
-                                child: Text(plant.latinName),
-                              );
-                            }).toList(),
-                      ),
-                    ],
-                  );
-                }
-              },
-            ),
-            const SizedBox(height: 10),
-            PlantForm(
-              nameController: nameController,
-              typeController: typeController,
-              descController: descController,
-              potVolumeController: potVolumeController,
-              requiredWaterController: requiredWaterController,
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: saveCustomPlant,
-              child: const Text('Save'),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _takePicture,
-              child: const Text('Take Picture'),
-            ),
-          ],
+              const SizedBox(height: 10),
+              PlantForm(
+                nameController: nameController,
+                typeController: typeController,
+                descController: descController,
+                potVolumeController: potVolumeController,
+                requiredWaterController: requiredWaterController,
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: saveCustomPlant,
+                child: const Text('Save'),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _takePicture,
+                child: const Text('Take Picture'),
+              ),
+            ],
+          ),
         ),
       ),
     );

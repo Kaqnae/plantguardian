@@ -28,7 +28,11 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
     if (cameraStatus.isGranted && storageStatus.isGranted) {
       _initCamera();
     } else {
-      print('Camera and storage permissions are required.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Camera and storage permissions are required.'),
+        ),
+      );
       Navigator.pop(context);
     }
   }
@@ -50,8 +54,9 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
   }
 
   Future<void> _takePicture() async {
-    if (!_controller.value.isInitialized || _controller.value.isTakingPicture)
+    if (!_controller.value.isInitialized || _controller.value.isTakingPicture) {
       return;
+    }
 
     try {
       final image = await _controller.takePicture();
@@ -71,10 +76,16 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
           Navigator.pop(context, image);
         }
       } else {
-        print("Error saving image to gallery: ${saveResult.errorMessage}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Failed to save image: ${saveResult.errorMessage}'),
+          ),
+        );
       }
     } catch (e) {
-      print("Error taking picture: $e");
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Error taking picture: $e')));
     }
   }
 

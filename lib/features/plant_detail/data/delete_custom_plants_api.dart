@@ -18,10 +18,6 @@ class DeleteCustomPlantsApi {
       headers: {'Content-Type': 'application/json', 'Cookie': jwtToken!},
     );
 
-    print('Response code: ${response.statusCode}');
-
-    print('Response code: ${response.body}');
-
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Could not delete plant');
     }

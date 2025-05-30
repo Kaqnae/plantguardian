@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:plantguardian/features/shared/models/jwt_model.dart';
@@ -13,7 +12,6 @@ class LoginApiService {
 
   Future<bool> login(String username, String password) async {
     final uri = Uri.parse('${dotenv.env['API_BASE_URL']}/login');
-    //final uri = Uri.parse('http://192.168.0.24:3000/api/login');
 
     final response = await client.post(
       uri,
@@ -38,10 +36,12 @@ class LoginApiService {
           final parsedToken = JWTPayload.fromJson(payloadMap);
           CookieSingleton().jwtPayload = parsedToken;
 
-          debugPrint('JWT parsed and stored: ${parsedToken.name}, role: ${parsedToken.role}');
-          } else {
+          debugPrint(
+            'JWT parsed and stored: ${parsedToken.name}, role: ${parsedToken.role}, id: ${parsedToken.id}',
+          );
+        } else {
           debugPrint('Invalid JWT structure.');
-          }
+        }
         final singletonCookie = CookieSingleton().jwtCookie;
         debugPrint(
           'Login succesful. JWT set in cookie. JWTCookie: $singletonCookie',

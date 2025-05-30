@@ -22,8 +22,6 @@ class UpdateCustomPlantsApi {
       body: jsonEncode(plant.toJson()),
     );
 
-    print('Update response code: ${response.statusCode}');
-
     if (response.statusCode != 201) {
       throw Exception('Failed to update plant: ${response.body}');
     }

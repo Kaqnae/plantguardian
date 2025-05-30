@@ -1,30 +1,37 @@
 import 'package:plantguardian/features/shared/models/generic_plant_model.dart';
+import 'package:plantguardian/features/shared/models/metrics_model.dart';
 
 class CustomPlantModel {
+  final String? userId;
   final String id;
   final String name;
   final String imageUrl;
   final int potVolume;
   final int requiredWater;
   final GenericPlantModel genericPlantModel;
+  final MetricsModel? metricsModel;
 
   CustomPlantModel({
+    this.userId,
     required this.id,
     required this.name,
     required this.imageUrl,
     required this.potVolume,
     required this.requiredWater,
     required this.genericPlantModel,
+    this.metricsModel,
   });
 
   Map<String, dynamic> toJson() {
     return {
+      'userId': userId,
       '_id': id,
       'name': name,
       'imageUrl': imageUrl,
       'potVolume': potVolume,
       'requiredWater': requiredWater,
       'genericPlant': genericPlantModel.toJson(),
+      'metrics': metricsModel?.toJson(),
     };
   }
 
@@ -53,8 +60,6 @@ class CustomPlantModel {
     if (genericPlantField is Map<String, dynamic>) {
       genericPlantModel = GenericPlantModel.fromJson(genericPlantField);
     } else if (genericPlantField is String) {
-      // You may want to fetch the GenericPlantModel by ID elsewhere,
-      // or create a placeholder:
       genericPlantModel = GenericPlantModel(
         id: genericPlantField,
         latinName: '',
@@ -66,7 +71,6 @@ class CustomPlantModel {
         tempMaxVal: 0,
       );
     } else {
-      // Handle null or unexpected type
       genericPlantModel = GenericPlantModel(
         id: '',
         latinName: '',
@@ -79,7 +83,15 @@ class CustomPlantModel {
       );
     }
 
+    MetricsModel? metricsModel;
+    if (json['metrics'] != null && json['metrics'] is Map<String, dynamic>) {
+      metricsModel = MetricsModel.fromJson(json['metrics']);
+    } else {
+      metricsModel = null;
+    }
+
     return CustomPlantModel(
+      userId: json['userId'] as String?,
       id: json['_id'] ?? '',
       name: json['name'] ?? '',
       imageUrl: json['imageUrl'] ?? '',
@@ -92,6 +104,7 @@ class CustomPlantModel {
               ? json['requiredWater']
               : int.tryParse(json['requiredWater'].toString()) ?? 0,
       genericPlantModel: genericPlantModel,
+      metricsModel: metricsModel,
     );
   }
 }

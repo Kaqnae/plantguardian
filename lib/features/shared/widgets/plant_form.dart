@@ -7,9 +7,8 @@ class PlantForm extends StatelessWidget {
   final TextEditingController descController;
   final TextEditingController potVolumeController;
   final TextEditingController requiredWaterController;
-
-  final TextEditingController? temperatureController;
-  final TextEditingController? moistureController;
+  final TextEditingController? allowedDryPeriodController;
+  final TextEditingController? moistureMinValController;
 
   const PlantForm({
     super.key,
@@ -18,8 +17,8 @@ class PlantForm extends StatelessWidget {
     required this.descController,
     required this.potVolumeController,
     required this.requiredWaterController,
-    this.temperatureController,
-    this.moistureController,
+    this.allowedDryPeriodController,
+    this.moistureMinValController,
   });
 
   @override
@@ -37,17 +36,15 @@ class PlantForm extends StatelessWidget {
           controller: requiredWaterController,
           label: 'Required Water (ml)',
         ),
-        if (temperatureController != null)
+        if (allowedDryPeriodController != null)
           PlantTextfields(
-            controller: temperatureController!,
-            label: 'Temperature (°C)',
-            readOnly: true,
+            controller: allowedDryPeriodController!,
+            label: 'Allowed Dry Period (days)',
           ),
-        if (moistureController != null)
+        if (moistureMinValController != null)
           PlantTextfields(
-            controller: moistureController!,
-            label: 'Moisture (%)',
-            readOnly: true,
+            controller: moistureMinValController!,
+            label: 'Moisture Min Value (%)',
           ),
       ],
     );

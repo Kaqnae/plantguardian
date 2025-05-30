@@ -23,10 +23,6 @@ class FetchGenericPlantsApi {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       List<dynamic> jsonData = json.decode(response.body);
-      print("Fetched plants:");
-      for (var p in jsonData) {
-        print(p['latinName']);
-      }
       return jsonData.map((data) => GenericPlantModel.fromJson(data)).toList();
     } else {
       throw Exception('Fejl ved henting af data');

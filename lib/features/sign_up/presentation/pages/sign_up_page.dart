@@ -46,18 +46,19 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Sign up successful')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Sign up successful')));
+        Navigator.pop(context);
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${response.body}')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error: ${response.body}')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Exception: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Exception: $e')));
     }
   }
 
@@ -69,21 +70,23 @@ class _SignUpPageState extends State<SignUpPage> {
         padding: const EdgeInsets.all(16.0),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              SignUpForm(
-                nameController: nameController,
-                userNameController: userNameController,
-                emailController: emailController,
-                passwordController: passwordController,
-                confirmPasswordController: confirmPasswordController,
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _signUp,
-                child: const Text('Sign up'),
-              ),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SignUpForm(
+                  nameController: nameController,
+                  userNameController: userNameController,
+                  emailController: emailController,
+                  passwordController: passwordController,
+                  confirmPasswordController: confirmPasswordController,
+                ),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: _signUp,
+                  child: const Text('Sign up'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

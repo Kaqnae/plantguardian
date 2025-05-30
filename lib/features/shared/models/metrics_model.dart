@@ -13,6 +13,16 @@ class MetricsModel {
     required this.lastWatered,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'customPlantId': customPlantId,
+      'dateTimeStamp': dateTimeStamp.toIso8601String(),
+      'moistureLevel': moistureLevel,
+      'waterLevel': waterLevel,
+      'lastWatered': lastWatered.toIso8601String(),
+    };
+  }
+
   factory MetricsModel.fromJson(Map<String, dynamic> json) {
     return MetricsModel(
       customPlantId: json['customPlantId'] ?? '',

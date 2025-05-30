@@ -28,9 +28,7 @@ class CameraService {
 
       await _cameraController!.initialize();
       _isInitialized = true;
-      print('Camera initialized successfully.');
     } catch (e) {
-      print('Camera initialization failed: $e');
       rethrow;
     }
   }

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'package:plantguardian/features/shared/models/custom_plant_model.dart';
 import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
@@ -20,9 +19,7 @@ class PostCustomPlantApi {
       body: jsonEncode(plant.toJson()),
     );
 
-    if (response.statusCode == 201) {
-      print('Posted customplant: ${plant.toJson()}');
-    } else {
+    if (response.statusCode != 201) {
       throw Exception('Couldnt post customplant');
     }
   }

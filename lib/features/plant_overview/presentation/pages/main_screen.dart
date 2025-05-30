@@ -7,6 +7,7 @@ import 'package:plantguardian/features/plant_overview/presentation/widgets/plant
 import 'package:plantguardian/features/shared/models/custom_plant_model.dart';
 import 'package:plantguardian/features/plant_detail/presentation/pages/plant_detail_page.dart';
 import 'package:plantguardian/features/profile/presentation/pages/profile_page.dart';
+import 'package:plantguardian/features/shared/services/cookie_singleton.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -51,11 +52,11 @@ class _MainScreenState extends State<MainScreen> {
               if (value == 'profile') {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProfilePage(),
-                  ),
+                  MaterialPageRoute(builder: (context) => ProfilePage()),
                 );
               } else if (value == 'logout') {
+                CookieSingleton().jwtCookie = null;
+                CookieSingleton().jwtPayload = null;
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => LoginPage()),

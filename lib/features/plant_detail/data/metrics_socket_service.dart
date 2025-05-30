@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
@@ -10,6 +11,23 @@ class MetricsSocketService {
 
   IO.Socket? _socket;
 
+  static Future<void> saveLatestMetric(
+    String plantID,
+    Map<String, dynamic> metric,
+  ) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString('metric_$plantID', jsonEncode(metric));
+  }
+
+  static Future<Map<String, dynamic>?> loadLatestMetric(String plantID) async {
+    final prefs = await SharedPreferences.getInstance();
+    final jsonString = prefs.getString('metric_$plantID');
+    if (jsonString != null) {
+      return jsonDecode(jsonString) as Map<String, dynamic>;
+    }
+    return null;
+  }
+
   void connect({
     required String url,
     required String roomId,
@@ -18,7 +36,6 @@ class MetricsSocketService {
     void Function(dynamic data)? onSuccess,
   }) {
     if (_socket != null) {
-      print('Disconnecting previous socket connection');
       _socket!.disconnect();
       _socket!.destroy();
       _socket!.clearListeners();
@@ -39,18 +56,16 @@ class MetricsSocketService {
     _socket!.off('disconnect');
 
     _socket!.onConnect((_) {
-      print('Connected to metrics socket');
       if (_socket != null) {
         _socket!.emit('join_room', roomId.toString());
       }
     });
 
-    _socket!.on('metric_new_data', (data) {
-      print('RAW metric data received: $data');
+    _socket!.on('metric_new_data', (data) async {
       if (data is String) {
         data = jsonDecode(data);
       }
-      print('Received new metric data: $data');
+      await saveLatestMetric(roomId, data);
       onMetricNewData(data);
     });
 
@@ -61,9 +76,7 @@ class MetricsSocketService {
       _socket!.on('metric_success', onSuccess);
     }
 
-    _socket!.onDisconnect((_) {
-      print('Disconnected from metrics socket');
-    });
+    _socket!.onDisconnect((_) {});
   }
 
   void disconnect() {
