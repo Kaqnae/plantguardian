@@ -2,12 +2,20 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:plantguardian/features/shared/models/custom_plant_model.dart';
 
+/// Widget representing a card for displaying a custom plant.
+/// Shows the plant's image (if available), name, and Latin name.
+/// Tapping the card triggers the provided [onTap] callback.
 class PlantCard extends StatelessWidget {
+  /// The custom plant to display.
   final CustomPlantModel plant;
+
+  /// Callback function to execute when the card is tapped.
   final VoidCallback onTap;
 
+  /// Creates a PlantCard widget.
   const PlantCard({super.key, required this.plant, required this.onTap});
 
+  /// Builds the UI for the plant card.
   @override
   Widget build(BuildContext context) {
     return Card(

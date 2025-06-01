@@ -1,10 +1,21 @@
+/// Model class representing a set of metrics for a custom plant.
 class MetricsModel {
+  /// The ID of the custom plant these metrics belong to.
   final String customPlantId;
+
+  /// The timestamp when the metric was recorded.
   final DateTime dateTimeStamp;
+
+  /// The measured moisture level of the plant.
   final double moistureLevel;
+
+  /// The water level status (as a string).
   final String waterLevel;
+
+  /// The last time the plant was watered.
   final DateTime lastWatered;
 
+  /// Constructor for creating a MetricsModel.
   MetricsModel({
     required this.customPlantId,
     required this.dateTimeStamp,
@@ -13,6 +24,7 @@ class MetricsModel {
     required this.lastWatered,
   });
 
+  /// Converts the metrics model to a JSON-compatible map.
   Map<String, dynamic> toJson() {
     return {
       'customPlantId': customPlantId,
@@ -23,6 +35,7 @@ class MetricsModel {
     };
   }
 
+  /// Creates a MetricsModel from a JSON map.
   factory MetricsModel.fromJson(Map<String, dynamic> json) {
     return MetricsModel(
       customPlantId: json['customPlantId'] ?? '',

@@ -1,13 +1,30 @@
+/// Model class representing a generic plant type.
 class GenericPlantModel {
+  /// The unique ID of the generic plant.
   final String id;
+
+  /// The Latin name of the plant.
   final String latinName;
+
+  /// The description of the plant.
   final String description;
+
+  /// The category of the plant (e.g., succulent, herb, etc.).
   final String category;
+
+  /// The minimum moisture value required for the plant.
   final int moistureMinVal;
+
+  /// The allowed dry period (in days) for the plant.
   final int allowedDryPeriod;
+
+  /// The minimum temperature the plant can tolerate.
   final int tempMinVal;
+
+  /// The maximum temperature the plant can tolerate.
   final int tempMaxVal;
 
+  /// Constructor for creating a GenericPlantModel.
   GenericPlantModel({
     required this.id,
     required this.latinName,
@@ -19,6 +36,7 @@ class GenericPlantModel {
     required this.tempMaxVal,
   });
 
+  /// Creates a GenericPlantModel from a JSON map.
   factory GenericPlantModel.fromJson(Map<String, dynamic> json) {
     return GenericPlantModel(
       id: (json['_id'] ?? '').toString(),
@@ -44,6 +62,7 @@ class GenericPlantModel {
     );
   }
 
+  /// Converts the generic plant model to a JSON-compatible map.
   Map<String, dynamic> toJson() {
     return {
       'id': id,

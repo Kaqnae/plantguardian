@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:saver_gallery/saver_gallery.dart';
 
+/// Page for previewing the camera and taking a picture.
 class CameraPreviewPage extends StatefulWidget {
   const CameraPreviewPage({super.key});
 
@@ -11,16 +12,24 @@ class CameraPreviewPage extends StatefulWidget {
   State<CameraPreviewPage> createState() => _CameraPreviewPageState();
 }
 
+/// State class for CameraPreviewPage.
+/// Handles camera initialization, permissions, and taking pictures.
 class _CameraPreviewPageState extends State<CameraPreviewPage> {
+  // Controller for the camera
   late CameraController _controller;
+
+  // Whether the camera is initialized and ready
   bool _isInitialized = false;
 
+  /// Initializes permissions and the camera when the widget is created.
   @override
   void initState() {
     super.initState();
     _checkPermissions();
   }
 
+  /// Checks for camera and storage permissions.
+  /// Initializes the camera if permissions are granted, otherwise shows a snackbar and pops the page.
   Future<void> _checkPermissions() async {
     final cameraStatus = await Permission.camera.request();
     final storageStatus = await Permission.storage.request();
@@ -37,6 +46,7 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
     }
   }
 
+  /// Initializes the camera controller with the back camera.
   Future<void> _initCamera() async {
     final cameras = await availableCameras();
     final backCamera = cameras.firstWhere(
@@ -53,6 +63,8 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
     }
   }
 
+  /// Takes a picture, saves it to the gallery, and returns the image file.
+  /// Shows a snackbar if saving fails.
   Future<void> _takePicture() async {
     if (!_controller.value.isInitialized || _controller.value.isTakingPicture) {
       return;
@@ -89,6 +101,7 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
     }
   }
 
+  /// Disposes the camera controller when the widget is removed from the tree.
   @override
   void dispose() {
     if (_controller.value.isInitialized) {
@@ -97,6 +110,7 @@ class _CameraPreviewPageState extends State<CameraPreviewPage> {
     super.dispose();
   }
 
+  /// Builds the camera preview UI with a capture button and close button.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

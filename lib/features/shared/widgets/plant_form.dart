@@ -1,15 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:plantguardian/features/shared/widgets/plant_textfields.dart';
 
+/// Widget representing a form for entering or editing plant details.
+/// Displays text fields for name, type, description, pot volume, required water,
+/// and optionally allowed dry period and moisture minimum value.
 class PlantForm extends StatelessWidget {
+  /// Controller for the name text field.
   final TextEditingController nameController;
+
+  /// Controller for the type text field.
   final TextEditingController typeController;
+
+  /// Controller for the description text field.
   final TextEditingController descController;
+
+  /// Controller for the pot volume text field.
   final TextEditingController potVolumeController;
+
+  /// Controller for the required water text field.
   final TextEditingController requiredWaterController;
+
+  /// Optional controller for the allowed dry period text field.
   final TextEditingController? allowedDryPeriodController;
+
+  /// Optional controller for the moisture minimum value text field.
   final TextEditingController? moistureMinValController;
 
+  /// Creates a PlantForm widget.
   const PlantForm({
     super.key,
     required this.nameController,
@@ -21,6 +38,7 @@ class PlantForm extends StatelessWidget {
     this.moistureMinValController,
   });
 
+  /// Builds the UI for the plant form.
   @override
   Widget build(BuildContext context) {
     return Column(

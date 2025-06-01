@@ -9,6 +9,7 @@ import 'package:plantguardian/features/shared/widgets/plant_form.dart';
 import 'package:plantguardian/features/shared/pages/camera_preview_page.dart';
 import 'package:image_picker/image_picker.dart';
 
+/// Page for adding a new custom plant.
 class AddPlantPage extends StatefulWidget {
   const AddPlantPage({super.key});
 
@@ -16,17 +17,26 @@ class AddPlantPage extends StatefulWidget {
   AddPlantPageState createState() => AddPlantPageState();
 }
 
+/// State class for AddPlantPage.
+/// Handles form input, image picking, and posting the new plant.
 class AddPlantPageState extends State<AddPlantPage> {
+  // Controllers for the plant form fields
   final nameController = TextEditingController();
   final typeController = TextEditingController();
   final descController = TextEditingController();
   final potVolumeController = TextEditingController();
   final requiredWaterController = TextEditingController();
+
+  // Holds the selected image file
   XFile? _image;
 
+  // Future for fetching generic plants
   late Future<List<GenericPlantModel>> futurePlants;
+
+  // Currently selected generic plant
   GenericPlantModel? selectedPlant;
 
+  /// Opens the camera preview page and sets the selected image.
   Future<void> _takePicture() async {
     final image = await Navigator.push<XFile?>(
       context,
@@ -40,6 +50,7 @@ class AddPlantPageState extends State<AddPlantPage> {
     }
   }
 
+  /// Initializes the page by fetching generic plants and setting the default selection.
   @override
   void initState() {
     super.initState();
@@ -54,12 +65,15 @@ class AddPlantPageState extends State<AddPlantPage> {
     });
   }
 
+  /// Updates the text fields with the selected generic plant's data.
   void updateTextFields(GenericPlantModel plant) {
     nameController.text = plant.latinName;
     typeController.text = plant.category;
     descController.text = plant.description;
   }
 
+  /// Saves the custom plant to the backend.
+  /// Shows a snackbar if saving fails.
   Future<void> saveCustomPlant() async {
     if (selectedPlant == null) {
       return;
@@ -85,6 +99,7 @@ class AddPlantPageState extends State<AddPlantPage> {
     }
   }
 
+  /// Builds the UI for adding a new plant, including the form and image picker.
   @override
   Widget build(BuildContext context) {
     return Scaffold(

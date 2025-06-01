@@ -1,16 +1,33 @@
 import 'package:plantguardian/features/shared/models/generic_plant_model.dart';
 import 'package:plantguardian/features/shared/models/metrics_model.dart';
 
+/// Model class representing a custom plant created by a user.
 class CustomPlantModel {
+  /// The ID of the user who owns this plant.
   final String? userId;
+
+  /// The unique ID of the custom plant.
   final String id;
+
+  /// The display name of the plant.
   final String name;
+
+  /// The image URL or file path for the plant.
   final String imageUrl;
+
+  /// The volume of the pot in milliliters.
   final int potVolume;
+
+  /// The required amount of water for the plant.
   final int requiredWater;
+
+  /// The generic plant model this custom plant is based on.
   final GenericPlantModel genericPlantModel;
+
+  /// The latest metrics for this plant, if available.
   final MetricsModel? metricsModel;
 
+  /// Constructor for creating a CustomPlantModel.
   CustomPlantModel({
     this.userId,
     required this.id,
@@ -22,6 +39,7 @@ class CustomPlantModel {
     this.metricsModel,
   });
 
+  /// Converts the custom plant model to a JSON-compatible map.
   Map<String, dynamic> toJson() {
     return {
       'userId': userId,
@@ -35,28 +53,12 @@ class CustomPlantModel {
     };
   }
 
-  /*
-  factory CustomPlantModel.fromJson(Map<String, dynamic> json) {
-    return CustomPlantModel(
-      id: (json['_id']) ?? 'null'.toString(),
-      name: (json['name'] ?? '').toString(),
-      imageUrl: (json['imageUrl'] ?? '').toString(),
-      potVolume:
-          json['potVolume'] is int
-              ? json['potVolume']
-              : int.tryParse(json['potVolume']?.toString() ?? '') ?? 0,
-      requiredWater:
-          json['requiredWater'] is int
-              ? json['requiredWater']
-              : int.tryParse(json['requiredWater']?.toString() ?? '') ?? 0,
-      genericPlantModel: GenericPlantModel.fromJson(json['genericPlant'] ?? {}),
-    );
-  }
-  */
+  /// Creates a CustomPlantModel from a JSON map.
   factory CustomPlantModel.fromJson(Map<String, dynamic> json) {
     final genericPlantField = json['genericPlant'];
     GenericPlantModel? genericPlantModel;
 
+    // Handle both object and string representations for genericPlant
     if (genericPlantField is Map<String, dynamic>) {
       genericPlantModel = GenericPlantModel.fromJson(genericPlantField);
     } else if (genericPlantField is String) {
@@ -83,6 +85,7 @@ class CustomPlantModel {
       );
     }
 
+    // Parse metrics if available
     MetricsModel? metricsModel;
     if (json['metrics'] != null && json['metrics'] is Map<String, dynamic>) {
       metricsModel = MetricsModel.fromJson(json['metrics']);
@@ -90,6 +93,7 @@ class CustomPlantModel {
       metricsModel = null;
     }
 
+    // Return the constructed CustomPlantModel
     return CustomPlantModel(
       userId: json['userId'] as String?,
       id: json['_id'] ?? '',
