@@ -271,7 +271,10 @@ class _PlantDetailPageState extends State<PlantDetailPage> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: deletePlant,
-                style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                  foregroundColor: Colors.white,
+                ),
                 child: const Text('Delete'),
               ),
             ],
