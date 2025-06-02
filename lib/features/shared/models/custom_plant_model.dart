@@ -49,7 +49,7 @@ class CustomPlantModel {
       'potVolume': potVolume,
       'requiredWater': requiredWater,
       'genericPlant': genericPlantModel.toJson(),
-      'latestMetrics': metricsModel?.toJson(),
+      'latestMetric': metricsModel?.toJson(),
     };
   }
 
@@ -87,9 +87,9 @@ class CustomPlantModel {
 
     // Parse metrics if available
     MetricsModel? metricsModel;
-    if (json['latestMetrics'] != null &&
-        json['latestMetrics'] is Map<String, dynamic>) {
-      metricsModel = MetricsModel.fromJson(json['latestMetrics']);
+    if (json['latestMetric'] != null &&
+        json['latestMetric'] is Map<String, dynamic>) {
+      metricsModel = MetricsModel.fromJson(json['latestMetric']);
     } else {
       metricsModel = null;
     }
