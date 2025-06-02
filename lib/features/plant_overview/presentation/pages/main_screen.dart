@@ -91,14 +91,11 @@ class _MainScreenState extends State<MainScreen> {
             // Show loading indicator while fetching data
             return const Center(child: CircularProgressIndicator());
           }
-
           if (snapshot.hasError) {
             // Show error message if fetching fails
             return Center(child: Text('Fejl: ${snapshot.error}'));
           }
-
           final plants = snapshot.data ?? [];
-
           // Build the list of plants, with an add button at the top
           return ListView.builder(
             itemCount: plants.length + 1,

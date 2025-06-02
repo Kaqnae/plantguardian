@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class PostCustomPlantApi {
   final http.Client client;
 
-  /// Constructor allows injecting a custom HTTP client (useful for testing).
+  /// Constructor accepts optional [client], defaults to a new [http.Client].
   PostCustomPlantApi({http.Client? client}) : client = client ?? http.Client();
 
   /// Sends a POST request to create a new custom plant.

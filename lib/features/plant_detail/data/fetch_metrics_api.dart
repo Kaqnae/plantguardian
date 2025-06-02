@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class FetchMetricsApi {
   final http.Client client;
 
-  /// Constructor allows injecting a custom HTTP client (useful for testing).
+  /// Constructor accepts optional [client], defaults to a new [http.Client].
   FetchMetricsApi({http.Client? client}) : client = client ?? http.Client();
 
   /// Fetches all metrics for a given custom plant ID.

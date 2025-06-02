@@ -10,25 +10,23 @@ class UpdateUserApi {
   final http.Client client;
 
   /// Constructor accepts optional [client], defaults to new [http.Client].
-  UpdateUserApi({http.Client? client})
-    : client = client ?? http.Client();
+  UpdateUserApi({http.Client? client}) : client = client ?? http.Client();
 
   /// Sends a PUT request to update the user profile.
-  /// 
+  ///
   /// Returns `true` if update was successful (HTTP 201), otherwise `false`.
   Future<bool> updateUser(Profile profile) async {
     // Build the API URI using the base URL and the user ID from JWT.
-    final uri = Uri.parse('${dotenv.env['API_BASE_URL']}/users/${CookieSingleton().jwtPayload!.id}');
+    final uri = Uri.parse(
+      '${dotenv.env['API_BASE_URL']}/users/${CookieSingleton().jwtPayload!.id}',
+    );
     // Get the JWT cookie for authentication.
     final jwt = CookieSingleton().jwtCookie;
 
     // Make the PUT request with JSON body and appropriate headers.
     final response = await client.put(
       uri,
-      headers: {
-        'Content-Type': 'application/json', 
-        'Cookie': jwt!
-      },
+      headers: {'Content-Type': 'application/json', 'Cookie': jwt!},
       body: jsonEncode(profile.toJson()),
     );
 

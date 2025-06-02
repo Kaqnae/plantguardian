@@ -9,7 +9,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class LoginApiService {
   final http.Client client;
 
-  /// Constructor allows injecting a custom HTTP client (useful for testing).
+  /// Constructor accepts optional [client], defaults to a new [http.Client].
   LoginApiService({http.Client? client}) : client = client ?? http.Client();
 
   /// Attempts to log in with the provided username and password.

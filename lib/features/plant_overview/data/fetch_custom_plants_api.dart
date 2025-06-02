@@ -8,7 +8,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class FetchCustomPlantsApi {
   final http.Client client;
 
-  /// Constructor that allows for dependency injection of the HTTP client
+  /// Constructor accepts optional [client], defaults to a new [http.Client].
   FetchCustomPlantsApi({http.Client? client})
     : client = client ?? http.Client();
 
